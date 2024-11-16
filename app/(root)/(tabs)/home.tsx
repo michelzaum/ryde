@@ -3,14 +3,15 @@ import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from
 import * as Location from 'expo-location';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useUser } from '@clerk/clerk-expo';
+import { useAuth, useUser } from '@clerk/clerk-expo';
 import RideCard from '@/components/RideCard';
 import { icons, images } from '@/constants';
 import GoogleTextInput from '@/components/GoogleTextInput';
 import Map from '@/components/Map';
 import { useLocationStore } from '@/store';
+import { useFetch } from '@/lib/fetch';
 
-const recentRides = [
+const recentRidesMock = [
   {
       "ride_id": "1",
       "origin_address": "Kathmandu, Nepal",
@@ -112,6 +113,8 @@ const recentRides = [
 export default function Page() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
+  const { signOut } = useAuth();
+  const { data: recentRides, loading } = useFetch(`/(api)/ride/${user?.id}`);
   const [hasPermissions, setHasPermissions] = useState(false);
   
   useEffect(() => {
@@ -139,10 +142,11 @@ export default function Page() {
 
     requestLocation()
   }, []);
-  
-  const loading = true;
 
-  function handleSignOut() {}
+  function handleSignOut() {
+    signOut();
+    router.replace('/(auth)/sign-in');
+  }
 
   function handleDestinationPress(location: { latitude: number, longitude: number, address: string }) {
     setDestinationLocation(location);
@@ -152,7 +156,7 @@ export default function Page() {
   return (
     <SafeAreaView className='bg-general-500'>
       <FlatList
-        data={recentRides.slice(0, 5)}
+        data={recentRidesMock.slice(0, 5)}
         renderItem={({ item }) => (
           <RideCard ride={item} />
         )}
