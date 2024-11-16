@@ -1,5 +1,6 @@
-import {Image, Text, View} from "react-native";
-import {useUser} from "@clerk/clerk-expo";
+import { Image, Text, View } from "react-native";
+import { useUser } from "@clerk/clerk-expo";
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 import RideLayout from "@/components/RideLayout";
 import {icons} from "@/constants";
@@ -8,15 +9,20 @@ import {useDriverStore, useLocationStore} from "@/store";
 import Payment from "@/components/Payment";
 
 export default function BookRide() {
-    const {user} = useUser();
-    const {userAddress, destinationAddress} = useLocationStore();
-    const {drivers, selectedDriver} = useDriverStore();
+    const { userAddress, destinationAddress } = useLocationStore();
+    const { drivers, selectedDriver } = useDriverStore();
+    const { user } = useUser();
 
     const driverDetails = drivers?.filter(
-        (driver) => +driver.id === selectedDriver,
+        (driver) => +driver.driver_id === selectedDriver,
     )[0];
 
     return (
+        <StripeProvider
+            publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
+            merchantIdentifier="merchant.uber.com"
+            urlScheme="myapp"
+        >
         <RideLayout title="Book Ride">
             <>
                 <Text className="text-xl font-JakartaSemiBold mb-3">
@@ -89,8 +95,15 @@ export default function BookRide() {
                         </Text>
                     </View>
                 </View>
-                <Payment />
+                <Payment
+                  fullName={user?.fullName!}
+                  email={user?.emailAddresses!}
+                  amount={driverDetails?.price!}
+                  driverId={driverDetails?.driver_id!}
+                  rideTime={driverDetails?.time!}
+                />
             </>
         </RideLayout>
+        </StripeProvider>
     );
 };
