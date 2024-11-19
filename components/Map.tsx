@@ -83,13 +83,13 @@ export default function Map() {
     >
       {markers.map((marker) => (
         <Marker
-          key={marker.driver_id}
+          key={marker.id}
           coordinate={{
             latitude: marker.latitude,
             longitude: marker.longitude,
           }}
           title={marker.title}
-          image={selectedDriver === marker.driver_id ? icons.selectedMarker : icons.marker}
+          image={selectedDriver === marker.id ? icons.selectedMarker : icons.marker}
         >
         </Marker>
       ))}

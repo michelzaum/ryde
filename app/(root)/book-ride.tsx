@@ -14,7 +14,7 @@ export default function BookRide() {
     const { user } = useUser();
 
     const driverDetails = drivers?.filter(
-        (driver) => +driver.driver_id === selectedDriver,
+        (driver) => +driver.id === selectedDriver,
     )[0];
 
     return (
@@ -97,9 +97,9 @@ export default function BookRide() {
                 </View>
                 <Payment
                   fullName={user?.fullName!}
-                  email={user?.emailAddresses!}
+                  email={user?.emailAddresses[0].emailAddress!}
                   amount={driverDetails?.price!}
-                  driverId={driverDetails?.driver_id!}
+                  driverId={driverDetails?.id!}
                   rideTime={driverDetails?.time!}
                 />
             </>

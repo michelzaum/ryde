@@ -4,10 +4,12 @@ import ReactNativeModal from 'react-native-modal';
 import { router } from 'expo-router';
 import { useStripe } from '@stripe/stripe-react-native';
 import { useAuth } from '@clerk/clerk-expo';
+
 import { CustomButton } from "./CustomButton";
+
 import { fetchAPI } from '@/lib/fetch';
-import { PaymentProps } from '@/types/type';
 import { useLocationStore } from '@/store';
+import { PaymentProps } from '@/types/type';
 import { images } from '@/constants';
 
 export default function Payment({ fullName, email, amount, driverId, rideTime }: PaymentProps) {
@@ -28,7 +30,7 @@ export default function Payment({ fullName, email, amount, driverId, rideTime }:
       merchantDisplayName: "Example, Inc.",
       intentConfiguration: {
         mode: {
-          amount: 1099,
+          amount: parseInt(amount) * 100,
           currencyCode: 'USD',
         },
         confirmHandler: async (paymentMethod, _, intentCreationCallback) => {
@@ -44,12 +46,12 @@ export default function Payment({ fullName, email, amount, driverId, rideTime }:
                 email,
                 amount,
                 paymentMethodId: paymentMethod.id,
-              })
-            }
+              }),
+            },
           );
       
           if (paymentIntent.client_secret) {
-            const { result } = await fetchAPI('(api)/(stripe)/pay', {
+            const { result } = await fetchAPI('/(api)/(stripe)/pay', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -69,7 +71,7 @@ export default function Payment({ fullName, email, amount, driverId, rideTime }:
                 },
                 body: JSON.stringify({
                   origin_address: userAddress,
-                  destination_adress: destinationAddress,
+                  destination_address: destinationAddress,
                   origin_latitude: userLatitude,
                   origin_longitude: userLongitude,
                   destination_latitude: destinationLatitude,
