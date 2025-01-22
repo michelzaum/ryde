@@ -1,50 +1,23 @@
-# Welcome to your Expo app 👋
+![image](https://github.com/user-attachments/assets/c339cedb-c3d4-462e-af4e-b124f8337548)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# About the project
 
-## Get started
+This app is a clone by Uber, where the user can request rides and choose between the drivers available to provide the ride.
 
-1. Install dependencies
+This app provides multiple features, including:
+- Complete Sign in and Sign up flow, including OAuth authentication;
+- Integration with Google Maps API;
+- Possibility to select an address to set as destination of the ride;
+- Check the average time that the ride will take;
+- See the route in the map that will be done to the destination;
+- See the near drivers available in the map, on their respective positions;
+- Possibility to pay the ride in the app.
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+To be able to build all these features, the used technologies were:
+- [React Native](https://reactnative.dev/);
+- [NativeWind](https://www.nativewind.dev/);
+- [Zustand](https://zustand-demo.pmnd.rs/);
+- [Clerk](https://clerk.com/);
+- [PostgreSQL](https://www.postgresql.org/);
+- [NeonDB](https://neon.tech/);
+- [Stripe](https://stripe.com/en-br).
